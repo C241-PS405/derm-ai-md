@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Derm Ai</string>
+    <string name="title_welcome_page">Hello I\'M DERM</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="sub_title">How can i help you?</string>
+    <string name="message_login_page">Masukkan Datamu Disini</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="title_signup_page">Lengkapi Data Dirimu Disini</string>
+    <string name="name">Name</string>
+    <string name="title_main">Scan your face here!</string>
+    <string name="message_main">Scan your face and get personalized skincare recommendations</string>
+    <string name="title_list">Recommendations</string>
+    <string name="logout">Logout</string>
+</resources>
