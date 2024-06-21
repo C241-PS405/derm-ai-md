@@ -47,9 +47,9 @@ class MainActivity : AppCompatActivity() {
 
         // Data dummy untuk rekomendasi
         val recommendations = listOf(
-            RecomendationModel("Acne Skin", "Description 1", R.drawable.ic_default_image),
-            RecomendationModel("Sensitif Skin", "Description 2", R.drawable.ic_default_image),
-            RecomendationModel("Oily Skin", "Description 3", R.drawable.ic_default_image)
+            RecomendationModel("Acne Skin", "Description 1", R.drawable.test1),
+            RecomendationModel("Sensitif Skin", "Description 2", R.drawable.sensitif),
+            RecomendationModel("Oily Skin", "Description 3", R.drawable.oily)
         )
 
         // Inisialisasi RecyclerView
@@ -59,6 +59,10 @@ class MainActivity : AppCompatActivity() {
         binding.scanButton.setOnClickListener {
             val intent = Intent(this, ScanActivity::class.java)
             startActivity(intent)
+        }
+
+        binding.logoutButton.setOnClickListener {
+            viewModel.logout()
         }
     }
 
@@ -74,18 +78,18 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-
-        when (item.itemId) {
-            R.id.btn_logout -> {
-                viewModel.logout()
-            }
-        }
-        return super.onOptionsItemSelected(item)
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.option_menu, menu)
-        return true
-    }
+//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+//
+//        when (item.itemId) {
+//            R.id.btn_logout -> {
+//                viewModel.logout()
+//            }
+//        }
+//        return super.onOptionsItemSelected(item)
+//    }
+//
+//    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+//        menuInflater.inflate(R.menu.option_menu, menu)
+//        return true
+//    }
 }

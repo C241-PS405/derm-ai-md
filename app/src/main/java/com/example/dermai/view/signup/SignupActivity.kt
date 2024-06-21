@@ -66,7 +66,7 @@ class SignupActivity : AppCompatActivity() {
                             binding.progressBar.visibility = View.GONE
                             AlertDialog.Builder(this).apply {
                                 setTitle("Yeah!")
-                                setMessage("Akun dengan $email sudah jadi nih. Yuk, login dan belajar coding.")
+                                setMessage("Akun dengan $email sudah jadi nih. Yuk, login.")
                                 setPositiveButton("Lanjut") { _, _ ->
                                     val intent =
                                         Intent(this@SignupActivity, LoginActivity::class.java)

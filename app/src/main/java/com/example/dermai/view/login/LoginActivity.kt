@@ -71,7 +71,7 @@ class LoginActivity : AppCompatActivity() {
                             )
                             AlertDialog.Builder(this).apply {
                                 setTitle("Yeah!")
-                                setMessage("Anda berhasil login. Sudah tidak sabar untuk belajar ya?")
+                                setMessage("Anda berhasil login. Sudah tidak sabar membutuhkan bantuan Derm AI ya?")
                                 setPositiveButton("Lanjut") { _, _ ->
                                     val intent = Intent(context, MainActivity::class.java)
                                     intent.flags =

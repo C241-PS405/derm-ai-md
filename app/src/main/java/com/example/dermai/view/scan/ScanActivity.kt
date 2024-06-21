@@ -1,23 +1,52 @@
 package com.example.dermai.view.scan
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import com.example.dermai.R
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.example.dermai.databinding.ActivityScanBinding
+import com.example.dermai.view.result.ResultActivity
 
 class ScanActivity : AppCompatActivity() {
+
     private lateinit var binding: ActivityScanBinding
+
+    private val cameraActivityResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == RESULT_OK) {
+            val capturedImage = result.data?.extras?.get("data") as Bitmap?
+            Toast.makeText(this, "Gambar dari kamera diambil", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, ResultActivity::class.java)
+            intent.putExtra("image_bitmap", capturedImage)
+            startActivity(intent)
+        }
+    }
+
+    private val galleryActivityResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == RESULT_OK) {
+            val selectedImageUri = result.data?.data
+            Toast.makeText(this, "Gambar dari galeri dipilih: $selectedImageUri", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, ResultActivity::class.java)
+            intent.putExtra("image_uri", selectedImageUri.toString())
+            startActivity(intent)
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityScanBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        binding.backButton.setOnClickListener {
+            finish()
+        }
 
         // Tambahkan listener untuk gallery_scan
         binding.galeryScan.setOnClickListener {
@@ -26,16 +55,19 @@ class ScanActivity : AppCompatActivity() {
             // Contoh: Membuka galeri
             val intent = Intent(Intent.ACTION_PICK)
             intent.type = "image/*"
-            startActivityForResult(intent, 1)
+            galleryActivityResultLauncher.launch(intent)
         }
 
         // Tambahkan listener untuk camera_scan
         binding.cameraScan.setOnClickListener {
             // Implementasi aksi camera_scan
-            Toast.makeText(this, "Kamera scan diklik", Toast.LENGTH_SHORT).show()
-            // Contoh: Membuka kamera
-            val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-            startActivityForResult(intent, 2)
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
+                != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CAMERA), CAMERA_PERMISSION_REQUEST_CODE)
+            } else {
+                val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                cameraActivityResultLauncher.launch(intent)
+            }
         }
 
         // Tambahkan listener untuk back
@@ -47,21 +79,19 @@ class ScanActivity : AppCompatActivity() {
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == RESULT_OK) {
-            when (requestCode) {
-                1 -> {
-                    // Handle image picked from gallery
-                    val selectedImageUri = data?.data
-                    Toast.makeText(this, "Gambar dari galeri dipilih: $selectedImageUri", Toast.LENGTH_SHORT).show()
-                }
-                2 -> {
-                    // Handle image captured from camera
-                    val capturedImage = data?.extras?.get("data")
-                    Toast.makeText(this, "Gambar dari kamera diambil", Toast.LENGTH_SHORT).show()
-                }
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == CAMERA_PERMISSION_REQUEST_CODE) {
+            if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                cameraActivityResultLauncher.launch(intent)
+            } else {
+                Toast.makeText(this, "Izin kamera diperlukan untuk menggunakan fitur ini", Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+    companion object {
+        private const val CAMERA_PERMISSION_REQUEST_CODE = 100
     }
 }

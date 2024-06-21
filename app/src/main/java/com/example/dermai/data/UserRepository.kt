@@ -39,11 +39,10 @@ class UserRepository private constructor(
         emit(Result.Loading)
         try {
             val response = apiService.register(name, email, password)
-
             emit(Result.Success(response))
         } catch (e: Exception) {
             emit(Result.Error("${e.message}"))
-            Log.e("respond signup", "signup: $e",)
+            Log.e("respond signup", "signup: $e", )
 
         }
     }

@@ -13,4 +13,7 @@
     <string name="message_main">Scan your face and get personalized skincare recommendations</string>
     <string name="title_list">Recommendations</string>
     <string name="logout">Logout</string>
+    <string name="image_classifier_failed">Gagal Clasifikasi</string>
+    <string name="skin_infor">Skin Information</string>
+    <string name="skin_rekomen">Skincare Recomendations</string>
 </resources>
