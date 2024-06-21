@@ -21,3 +21,7 @@ Analysis
 Sending scanned data to the server for analysis.
 Analysis Results
 Displays the results of skin condition analysis and provides recommendations for appropriate skincare products.
+
+uses API from cloud computing for login and registration features 
+
+and using the scan feature of the model obtained from machine learning to obtain skin analysis results obtained with the TensorFlow Lite type
