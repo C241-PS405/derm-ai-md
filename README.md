@@ -1,5 +1,5 @@
 *Mobile Development Path* 
-Talking about a mobile application that communicates with DermAI's RESTful API to provide AI-based skincare recommendations to users. This application includes registration, login, main page (scan options or skincare recommendations), scanning, analysis and analysis results.
+Talking about a mobile application that communicates with DermAI to provide AI-based skincare recommendations to users. This application includes registration, login, main page (scan options or skincare recommendations), scanning, analysis and analysis results.
 
 The Mobile Developer Division consists of:
 - A179D4KX3524 - Vitri Septia Kirani
